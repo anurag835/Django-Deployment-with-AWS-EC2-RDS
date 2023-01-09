@@ -1,0 +1,22 @@
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">
+    <p{% if message.tags %} class="" {% endif %}>{{message}}</p>
+</div>
+{% endfor %}
+{% endif %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<div class="card card-secondary" style="width: 400px; margin: auto; padding: 10px; margin-top: 10rem;">
+    <div class="card-header">
+        <h4 class="card-title">Export Excel Files</h4>
+    </div>
+    <div class="card-body">
+        <form role="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="file" , name="myfile" class="form-control">
+            </div> <br><br><br>
+            <button type="submit" class="btn btn-info btn-block">Upload</button>
+        </form>
+    </div>
+</div>
