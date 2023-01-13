@@ -5,7 +5,14 @@
 </div>
 {% endfor %}
 {% endif %}
+{% load static %}
+<link href="{% static 'student_marksheet/css/style.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<div>
+    <button class="button button1" type="button">
+        <a class="nav-link" href="{% url 'input_roll'  %}">Back To Login</a>
+    </button>
+</div>
 <div class="card card-secondary" style="width: 400px; margin: auto; padding: 10px; margin-top: 10rem;">
     <div class="card-header">
         <h4 class="card-title">Export Excel Files</h4>

@@ -25,7 +25,6 @@ def file_upload(request):
                 return render(request, 'student_marksheet/upload.html')
 
             imported_data = dataset.load(excel_file.read(), format='xlsx')
-            # print(">>>>>>>>>>>>>>>", imported_data)
             result = user_data_resource.import_data(dataset, dry_run=True)
             if not result.has_errors():
                 user_data_resource.import_data(dataset, dry_run=False)
@@ -52,28 +51,26 @@ def simple_file_upload(request):
                 return render(request, 'student_marksheet/upload.html')
 
             imported_data2 = dataset2.load(excel_file.read(), format='xlsx')
-            # print("#####################", imported_data2)
             result2 = user_input_resource.import_data(dataset2, dry_run=True)
             if not result2.has_errors():
                 user_input_resource.import_data(dataset2, dry_run=False)
 
             for data2 in imported_data2:
-                # print(">>>>>>>>>>>>>>", data2)
                 user_data = UserData.objects.get(roll=data2[0])
-                # print("////////////////", user_data)
                 value2 = UserInput(
                     data2[0], data2[1], data2[2], data2[3], data2[4],
                     data2[5], data2[6], data2[7], data2[8], data2[9],
                     data2[10], data2[11], data2[12], data2[13], data2[14],
                     data2[15], data2[16], data2[17], data2[18], user_data
                 )
-                # print("?????????????????????", value2)
                 value2.save()
 
         except MultiValueDictKeyError as e:
             print(e)
 
     return render(request, 'student_marksheet/upload.html')
+
+# View for getting data from database model
 
 
 def get_data(request, roll):
@@ -90,7 +87,6 @@ def get_data(request, roll):
     context['max_marks'] = max_marks
 
     percentage = total_sum/max_marks*100
-    # print("&&&&&&&&&&&&&7", percentage)
     if percentage >= 90:
         context['grade'] = "A"
     else:
@@ -103,7 +99,6 @@ def get_data(request, roll):
 def input_roll(request):
     if request.method == "POST":
         roll = request.POST.get('roll')
-        # print("############", roll)
         return redirect(f"/get-data/{roll}")
     return render(request, 'student_marksheet/inputform.html')
 
@@ -124,7 +119,6 @@ class GeneratePDFView(View):
         context['max_marks'] = max_marks
 
         percentage = total_sum/max_marks*100
-        # print("&&&&&&&&&&&&&7", percentage)
         if percentage >= 90:
             context['grade'] = "A"
         else:
@@ -134,7 +128,7 @@ class GeneratePDFView(View):
         template = get_template('student_marksheet/marksheet.html')
         context['data'] = data
         html = template.render(context)
-        print("html#########",)
+        # print("html#########", html)
         pdf = render_to_pdf('student_marksheet/marksheet.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
