@@ -9,6 +9,7 @@ from .helpers import render_to_pdf
 from django.template.loader import get_template
 
 from django.views.generic import View
+# import os
 # Create your views here.
 
 # View for uploading data.xlsx file
@@ -103,6 +104,59 @@ def input_roll(request):
     return render(request, 'student_marksheet/inputform.html')
 
 
+# class GeneratePDFView(View):
+#     def get(self, request, roll, * args, **kwargs):
+#         print(roll)
+#         context = {}
+#         files = []
+#         data = UserInput.objects.get(roll=roll)
+#         context['data'] = data
+
+#         total_sum = data.markObSub1+data.markObSub2+data.markObSub3 + \
+#             data.markObSub4+data.markObSub5+data.markObSub6
+#         context['total_sum'] = total_sum
+#         max_marks = data.maxMarkSub1+data.maxMarkSub2+data.maxMarkSub3 + \
+#             data.maxMarkSub4+data.maxMarkSub5+data.maxMarkSub6
+
+#         context['max_marks'] = max_marks
+
+#         percentage = total_sum/max_marks*100
+#         if percentage >= 90:
+#             context['grade'] = "A"
+#         else:
+#             context['grade'] = "F"
+
+#         print(data)
+#         template = get_template('student_marksheet/marksheet.html')
+#         context['data'] = data
+#         html = template.render(context)
+#         # print("html#########", html)
+#         full_zip_in_memory = "/home/anurag/Desktop/DKNSB/web_app/"
+
+#         # create pdf, output folder to store results (if not exist already)
+#         isExist = os.path.exists(full_zip_in_memory)
+#         if not isExist:
+#             os.makedirs(full_zip_in_memory)
+#         pdf = render_to_pdf('student_marksheet/marksheet.html', context)
+#         files.append(f"{data.userdata.name} {data.userdata.roll}.pdf", pdf)
+#         full_zip_in_memory = generate_zip(files)
+
+#         response = HttpResponse(
+#             full_zip_in_memory, content_type='application/force-download')
+#         content = 'attachment; filename="{}"'
+#         response['Content-Disposition'] = content.format('marksheet.zip')
+#         # if pdf:
+#         #     response = HttpResponse(pdf, content_type='application/pdf')
+#         #     filename = f"{data.userdata.name} {data.userdata.roll}.pdf"
+#         #     content = "inline; filename='%s'" % (filename)
+#         #     download = request.GET.get("download")
+#         #     if download:
+#         #         content = "attachment; filename='%s'" % (filename)
+#         #     response['Content-Disposition'] = content
+#         return response
+#         # return HttpResponse("Not found")
+
+
 class GeneratePDFView(View):
     def get(self, request, roll, * args, **kwargs):
         print(roll)
@@ -119,6 +173,7 @@ class GeneratePDFView(View):
         context['max_marks'] = max_marks
 
         percentage = total_sum/max_marks*100
+        # print("&&&&&&&&&&&&&7", percentage)
         if percentage >= 90:
             context['grade'] = "A"
         else:
@@ -128,7 +183,7 @@ class GeneratePDFView(View):
         template = get_template('student_marksheet/marksheet.html')
         context['data'] = data
         html = template.render(context)
-        # print("html#########", html)
+        print("html#########",)
         pdf = render_to_pdf('student_marksheet/marksheet.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
