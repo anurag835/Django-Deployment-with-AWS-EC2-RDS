@@ -90,10 +90,10 @@ WSGI_APPLICATION = "web_app.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "student",
+        'NAME': "anuragdb",
         'USER': "postgres",
         'PASSWORD': "Anuragss07#",
-        'HOST': "database-1.cetdkrjhiih4.ap-south-1.rds.amazonaws.com",
+        'HOST': "database-3.cetdkrjhiih4.ap-south-1.rds.amazonaws.com",
         'PORT': 5432
     }
 }
