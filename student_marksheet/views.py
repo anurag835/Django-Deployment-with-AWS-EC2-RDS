@@ -7,7 +7,7 @@ from tablib import Dataset
 from django.utils.datastructures import MultiValueDictKeyError
 from .helpers import render_to_pdf
 from django.template.loader import get_template
-
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 # import os
 # Create your views here.
@@ -41,6 +41,7 @@ def file_upload(request):
 # View for uploading user_input.xlsx file
 
 
+@csrf_exempt
 def simple_file_upload(request):
     if request.method == "POST":
         user_input_resource = UserInputResource()
@@ -57,12 +58,11 @@ def simple_file_upload(request):
                 user_input_resource.import_data(dataset2, dry_run=False)
 
             for data2 in imported_data2:
-                user_data = UserData.objects.get(roll=data2[0])
                 value2 = UserInput(
                     data2[0], data2[1], data2[2], data2[3], data2[4],
                     data2[5], data2[6], data2[7], data2[8], data2[9],
                     data2[10], data2[11], data2[12], data2[13], data2[14],
-                    data2[15], data2[16], data2[17], data2[18], user_data
+                    data2[15], data2[16], data2[17], data2[18], data2[0]
                 )
                 value2.save()
 
