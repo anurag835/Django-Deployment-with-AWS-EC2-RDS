@@ -1,29 +1,67 @@
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">
-    <p{% if message.tags %} class="" {% endif %}>{{message}}</p>
-</div>
-{% endfor %}
-{% endif %}
+<!DOCTYPE html>
 {% load static %}
-<link href="{% static 'student_marksheet/css/style.css' %}" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<div>
-    <button class="button button1" type="button">
-        <a class="nav-link" href="{% url 'input_roll'  %}">Back To Login</a>
-    </button>
-</div>
-<div class="card card-secondary" style="width: 400px; margin: auto; padding: 10px; margin-top: 10rem;">
-    <div class="card-header">
-        <h4 class="card-title">Export Excel Files</h4>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'student_marksheet/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Excel File Template</title>
+    <style>
+        /* Additional styles for the header */
+        .navbar-brand {
+            color: #3498db;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} m-2" id="msg" role="alert">
+      {{message}}
     </div>
-    <div class="card-body">
-        <form role="form" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="file" , name="myfile" class="form-control">
-            </div> <br><br><br>
-            <button type="submit" class="btn btn-info btn-block">Upload</button>
-        </form>
+    {% endfor %}
+    {% endif %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Upload Excel File</a>
+            <button class="button button1" type="button" style="margin-top:0.1rem;">
+                <a class="nav-link" href="{% url 'input_roll'  %}">Back To Login</a>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="card card-secondary mx-auto" style="max-width: 400px;">
+            <div class="card-header">
+                <h4 class="card-title">Export Excel Files</h4>
+            </div>
+            <div class="card-body">
+                <form role="form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="file" name="myfile" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-block">Upload</button>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // message timeout for 2 seconds
+            setTimeout(function () {
+                $('#msg').fadeOut('slow');
+            }, 2000); // time in milliseconds
+        });
+    </script>    
+</body>
+
+</html>
+

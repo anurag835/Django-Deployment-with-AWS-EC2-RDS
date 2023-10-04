@@ -4,7 +4,7 @@ from django.db import models
 
 
 class UserData(models.Model):
-    roll = models.CharField(max_length=100, primary_key=True)
+    roll = models.CharField(max_length=100, primary_key=True, default='P111-22')
     name = models.CharField(max_length=100)
     parentName = models.CharField(max_length=100)
     course = models.CharField(max_length=100)

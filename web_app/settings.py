@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 # import environ
 
 # env = environ.Env()
@@ -90,10 +91,10 @@ WSGI_APPLICATION = "web_app.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "anuragdb",
+        'NAME': "dknsb",
         'USER': "postgres",
         'PASSWORD': "Anuragss07#",
-        'HOST': "database-3.cetdkrjhiih4.ap-south-1.rds.amazonaws.com",
+        'HOST': "localhost",
         'PORT': 5432
     }
 }
@@ -128,6 +129,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

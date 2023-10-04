@@ -1,16 +1,46 @@
 .dropdown {
-    text-align: center;
-    margin-top: -6rem;
-    border: none;
-    color: blue;
-    padding: 8px 18px;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    float: right;
-    margin-right: 4rem;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+
+.dropdown-menu-right {
+    left: auto;
+    right: 0;
+}
+
+.show {
+    display: block;
 }
 
 .button {
@@ -26,4 +56,11 @@
     cursor: pointer;
     float: right;
     margin-right: 4rem;
+}
+/* responsive.css */
+
+@media (max-width: 768px) {
+    .card-secondary {
+        margin-top: 5rem;  /* Adjust as needed for smaller screens */
+    }
 }

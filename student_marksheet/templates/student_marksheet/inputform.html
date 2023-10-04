@@ -1,52 +1,99 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    </script>
+    <!-- Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+        crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <title>Document</title>
+        crossorigin="anonymous">
+    </script>
     <link href="{% static 'student_marksheet/css/style.css' %}" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        /* Additional styles for the header */
+        .navbar-brand {
+            color: #3498db;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Add Excel File
-        </a>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} m-2" id="msg" role="alert">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- Navbar with dropdown -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">User Marksheet Generator</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" style="max-width: 400px; padding: 10px; margin-top: 0.1rem;">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add Excel File
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'data' %}">Add Data File</a>
+                            <a class="dropdown-item" href="{% url 'user'  %}">Add Input File</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'user'  %}">Add Input File</a>
-            <a class="dropdown-item" href="{% url 'data' %}">Add Data File</a>
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="card card-secondary mx-auto" style="max-width: 400px;">
+            <div class="card-header">
+                <h4 class="card-title">User Input Form</h4>
+            </div>
+            <div class="card-body">
+                <form role="form" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="roll" aria-describedby="rollHelp"
+                            placeholder="Enter roll" required>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-block">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="card card-secondary" style="width: 400px; margin: auto; padding: 10px; margin-top: 10rem;">
-        <div class="card-header">
-            <h4 class="card-title">User Marksheet Details</h4>
-        </div>
-        <div class="card-body">
-            <form role="form" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="text" class="form-control" name="roll" aria-describedby="rollHelp"
-                        placeholder="Enter roll">
-                </div> <br><br><br>
-                <button type="submit" class="btn btn-info btn-block">Submit</button>
-            </form>
-        </div>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // message timeout for 2 seconds
+            setTimeout(function () {
+                $('#msg').fadeOut('slow');
+            }, 2000); // time in milliseconds
+        });
+    </script>    
 </body>
 
 </html>

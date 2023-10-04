@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="To prepare marksheets as per the request of user input">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -17,40 +18,73 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <title>Marksheet Template</title>
+    <style>
+        .button {
+            text-align: center;
+            margin-top: 1.5rem;
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            float: right;
+            margin-right: 1rem;
+        }
+
+        .card {
+            width: 900px;
+            margin: auto;
+            margin-top: 2rem;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .btn-pdf {
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 
 <body>
-    <br>
-    <br>
-    <div>
-        <h2 style="text-align: center;">MARKSHEET</h2>
-    </div>
-    <br>
-    <br>
-    <div class="mx-auto" style="width: 900px;">
-        <table class="table table-bordered">
+    <div class="container-fluid">
+        <!-- Back To Login button -->
+        <button class="btn btn-primary button" onclick="redirectToLogin()">Back To Login</button>
 
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ data.userdata.name }}</td>
-                    <th>Roll No</th>
-                    <td>{{data.userdata.roll }}</td>
-                </tr>
-                <tr>
-                    <th>Course</td>
-                    <td>{{ data.userdata.course }}</td>
-                    <th>Branch</th>
-                    <td>{{ data.userdata.branch }}</td>
-                </tr>
-                <tr>
-                    <th>Parent's Name</th>
-                    <td>{{ data.userdata.parentName }}</td>
-                    <th></th>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+        <br>
+        <br>
+        <div>
+            <h2 class="text-center">MARKSHEET</h2>
+        </div>
+        <br>
+        <br>
+        <div class="card">    
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ data.userdata.name }}</td>
+                        <th>Roll No</th>
+                        <td>{{ data.userdata.roll }}</td>
+                    </tr>
+                    <tr>
+                        <th>Course</td>
+                        <td>{{ data.userdata.course }}</td>
+                        <th>Branch</th>
+                        <td>{{ data.userdata.branch }}</td>
+                    </tr>
+                    <tr>
+                        <th>Parent's Name</th>
+                        <td>{{ data.userdata.parentName }}</td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         <br>
         <br>
         <br>
@@ -60,73 +94,68 @@
                     <th>S. N.</th>
                     <th>Subject code</th>
                     <th>Subject name</th>
-                    <th>Marks<br>obtained</th>
-                    <th>Maximum<br>Marks</th>
+                    <th>Marks obtained</th>
+                    <th>Maximum Marks</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
-
-                    <td> {{ data.subject1 }}</td>
-                    <td> English</td>
+                    <td>{{ data.subject1 }}</td>
+                    <td>English</td>
                     <td>{{ data.markObSub1 }}</td>
-                    <td>{{data.maxMarkSub1 }}</td>
+                    <td>{{ data.maxMarkSub1 }}</td>
                 </tr>
-
                 <tr>
                     <td>2</td>
-                    <td> {{ data.subject2 }}</td>
-                    <td> Engineering Mathematics</td>
+                    <td>{{ data.subject2 }}</td>
+                    <td>Engineering Mathematics</td>
                     <td>{{ data.markObSub2 }}</td>
-                    <td>{{data.maxMarkSub2 }}</td>
+                    <td>{{ data.maxMarkSub2 }}</td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td> {{ data.subject3 }}</td>
-                    <td> Basics of Mechanical Engineering</td>
+                    <td>{{ data.subject3 }}</td>
+                    <td>Basics of Mechanical Engineering</td>
                     <td>{{ data.markObSub3 }}</td>
-                    <td>{{data.maxMarkSub3 }}</td>
+                    <td>{{ data.maxMarkSub3 }}</td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td> {{ data.subject4 }}</td>
-                    <td> Basics of Electronics</td>
+                    <td>{{ data.subject4 }}</td>
+                    <td>Basics of Electronics</td>
                     <td>{{ data.markObSub4 }}</td>
-                    <td>{{data.maxMarkSub4 }}</td>
+                    <td>{{ data.maxMarkSub4 }}</td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td> {{ data.subject5 }}</td>
-                    <td> Engineering Physics</td>
+                    <td>{{ data.subject5 }}</td>
+                    <td>Engineering Physics</td>
                     <td>{{ data.markObSub5 }}</td>
-                    <td>{{data.maxMarkSub5 }}</td>
+                    <td>{{ data.maxMarkSub5 }}</td>
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td> {{ data.subject6 }}</td>
-                    <td> Electrical Engineering</td>
+                    <td>{{ data.subject6 }}</td>
+                    <td>Electrical Engineering</td>
                     <td>{{ data.markObSub6 }}</td>
-                    <td>{{data.maxMarkSub6 }}</td>
+                    <td>{{ data.maxMarkSub6 }}</td>
                 </tr>
-
             </tbody>
         </table>
 
         <br>
-
         <br>
         <br>
 
         <table class="table table-bordered">
-
             <tbody>
                 <tr>
                     <th>Total Marks Obtained</th>
                     <td>{{ total_sum }}</td>
                 </tr>
                 <tr>
-                    <th>Maximum Marks</td>
+                    <th>Maximum Marks</th>
                     <td>{{ max_marks }}</td>
                 </tr>
                 <tr>
@@ -136,10 +165,19 @@
             </tbody>
         </table>
 
-        <a class="btn btn-primary" href="{% url 'generate_pdf' data.roll %}">Create PDF</a>
+        <div class="text-center">
+            <a class="btn btn-primary btn-pdf" href="{% url 'generate_pdf' data.roll %}">Create PDF</a>
+        </div>
 
     </div>
 
+    <!-- JavaScript function to redirect to the input login page -->
+    <script>
+        function redirectToLogin() {
+            window.location.href = "{% url 'input_roll'  %}";
+        }
+    </script>
 </body>
 
 </html>
+
