@@ -10,6 +10,7 @@ from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.db import IntegrityError
+from django.http import HttpResponseServerError
 # Create your views here.
 
 # View for uploading data.xlsx file
@@ -148,18 +149,25 @@ class GeneratePDFView(View):
             context['grade'] = "A"
         else:
             context['grade'] = "F"
+        try:
+            template = get_template('student_marksheet/marksheet.html')
+            context['data'] = data
+            html = template.render(context)
+            pdf = render_to_pdf('student_marksheet/marksheet.html', context)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                filename = f"{data.userdata.name} {data.userdata.roll}.pdf"
+                content = "inline; filename='%s'" % (filename)
+                download = request.GET.get("download")
+                if download:
+                    content = "attachment; filename='%s'" % (filename)
+                response['Content-Disposition'] = content
+                return response
+        except Exception as e:
+            # Error for further investigation
+            print(f"Error generating PDF: {str(e)}")
+            # User-friendly error response
+            return HttpResponseServerError("An error occurred while generating the PDF. Please try again later.")
 
-        template = get_template('student_marksheet/marksheet.html')
-        context['data'] = data
-        html = template.render(context)
-        pdf = render_to_pdf('student_marksheet/marksheet.html', context)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = f"{data.userdata.name} {data.userdata.roll}.pdf"
-            content = "inline; filename='%s'" % (filename)
-            download = request.GET.get("download")
-            if download:
-                content = "attachment; filename='%s'" % (filename)
-            response['Content-Disposition'] = content
-            return response
-        return HttpResponse("Not found")
+        # Handle the case where PDF generation fails for an unknown reason
+        return HttpResponseServerError("An unexpected error occurred while generating the PDF. Please try again later.")

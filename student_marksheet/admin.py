@@ -7,7 +7,7 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(UserData)
 class UserDataAdmin(ImportExportModelAdmin):
-    list_display = ('roll', 'name', 'parentName', 'course', 'branch')
+    list_display = ('roll', 'name', 'parentName', 'course', 'branch', 'logo')
 
 
 @admin.register(UserInput)

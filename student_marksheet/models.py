@@ -9,6 +9,7 @@ class UserData(models.Model):
     parentName = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
     branch = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='logos/', null=True, blank=True)
 
 
 class UserInput(models.Model):
