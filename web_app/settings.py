@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*tx*v!5%!ly+06xc=)li98lxga%#_jf*#2*eevu7d(p(l7dtst"
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -89,10 +89,10 @@ WSGI_APPLICATION = "web_app.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dknsb',
-        'USER': 'postgres',
-        'PASSWORD': 'Anuragss07#',
-        'HOST': 'usermarksheet.ccxyrjqdblte.eu-north-1.rds.amazonaws.com',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': 5432,
     }
 }
@@ -133,8 +133,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 
 # Static and media files settings
-AWS_ACCESS_KEY_ID = 'AKIA247MMM3FLX5WNXDW'
-AWS_SECRET_ACCESS_KEY ='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'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID'),
+AWS_SECRET_ACCESS_KEY =os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'usermarksheet'
 AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'eu-north-1'
