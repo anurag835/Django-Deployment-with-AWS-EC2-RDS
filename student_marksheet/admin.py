@@ -4,6 +4,7 @@ from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 
+admin.site.register(Logo)
 
 @admin.register(UserData)
 class UserDataAdmin(ImportExportModelAdmin):

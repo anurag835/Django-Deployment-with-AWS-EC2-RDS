@@ -15,6 +15,9 @@
             font-size: 24px;
             font-weight: bold;
         }
+        .navbar-brand img {
+            margin-right: 20px; /* You can adjust this value */
+        }
     </style>
 </head>
 <body>
@@ -28,7 +31,17 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Upload Excel File</a>
+            {% if user_data.logo %}
+            <a class="navbar-brand" href="#">
+                <img src="{{ user_data.logo.url }}" alt="Logo" class="logo-img">
+                Upload Excel File
+            </a>
+            {% else %}
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'student_marksheet/images/school-logo-icon.png' %}" class="logo-img" style="height: 50px;">
+                    Upload Excel File
+                </a>
+            {% endif %}
             <button class="button button1" type="button" style="margin-top:0.1rem;">
                 <a class="nav-link" href="{% url 'input_roll'  %}">Back To Login</a>
             </button>

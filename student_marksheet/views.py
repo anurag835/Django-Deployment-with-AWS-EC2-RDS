@@ -72,18 +72,15 @@ def simple_file_upload(request):
                 return render(request, 'student_marksheet/upload.html')
 
             imported_data2 = dataset2.load(excel_file.read(), format='xlsx')
-            # Check if the imported_data is empty
-            if not imported_data2.headers:
-                messages.error(request, "Error uploading data: Empty file.")
-                return render(request, 'student_marksheet/upload.html')
-             # Check if any of the roll numbers in the imported data already exist in the database
-            existing_roll_numbers = set(UserData.objects.values_list('roll', flat=True))
+
+            # Check if any of the roll numbers in the imported data already exist in the database
+            existing_roll_numbers = set(UserInput.objects.values_list('roll', flat=True))
             new_roll_numbers = set(data2[0] for data2 in imported_data2)
 
             if existing_roll_numbers.intersection(new_roll_numbers):
                 messages.error(request, "Error uploading data: File has already been imported.")
                 return render(request, 'student_marksheet/upload.html')
-            
+
             # Check if all userdata_id values exist in the database
             userdata_ids = [data2[0] for data2 in imported_data2]
             missing_userdata_ids = set(userdata_ids) - set(UserData.objects.values_list('roll', flat=True))

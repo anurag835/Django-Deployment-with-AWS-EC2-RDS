@@ -1,15 +1,15 @@
 from django.db import models
 
-# Create your models here.
-
+class Logo(models.Model):
+    image = models.ImageField(upload_to='logos/', null=True, blank=True)
 
 class UserData(models.Model):
-    roll = models.CharField(max_length=100, primary_key=True, default='P111-22')
+    roll = models.CharField(max_length=100, primary_key=True)
     name = models.CharField(max_length=100)
     parentName = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
     branch = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='logos/', null=True, blank=True)
+    logo = models.OneToOneField(Logo, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class UserInput(models.Model):
