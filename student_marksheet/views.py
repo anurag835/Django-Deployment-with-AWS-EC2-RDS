@@ -124,7 +124,6 @@ def calculate_marks(data):
 
 
 # View for getting data from database model
-@login_required(login_url='input_roll')
 def get_data(request, token):
     context = {}
     user_data = UserData.objects.filter(token=token).first()
