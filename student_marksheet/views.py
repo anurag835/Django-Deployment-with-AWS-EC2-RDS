@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, Http404
 from .models import UserData, UserInput
 from .resources import UserDataResource, UserInputResource
 from django.contrib import messages
@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.db import IntegrityError
 from django.http import HttpResponseServerError
+from django.contrib.auth.decorators import login_required
+from cryptography.fernet import Fernet
 # Create your views here.
 
 # View for uploading data.xlsx file
@@ -122,32 +124,43 @@ def calculate_marks(data):
 
 
 # View for getting data from database model
-def get_data(request, roll):
+@login_required(login_url='input_roll')
+def get_data(request, token):
     context = {}
-    try:
-        data = UserInput.objects.get(roll=roll)
-    except UserInput.DoesNotExist:
-        messages.error(request, f"User with roll number {roll} does not exist.")
-        return redirect('input_roll')
+    user_data = UserData.objects.filter(token=token).first()
+    if user_data:
+        user_input_objects = user_data.userinput_set.all()
+        if user_input_objects:
+            data = get_object_or_404(UserInput, userdata__token=token)
+        
+            total_sum, max_marks, percentage = calculate_marks(data)
 
-    total_sum, max_marks, percentage = calculate_marks(data)
+            context['data'] = data
+            context['total_sum'] = total_sum
+            context['max_marks'] = max_marks
 
-    context['data'] = data
-    context['total_sum'] = total_sum
-    context['max_marks'] = max_marks
-
-    if percentage >= 90:
-        context['grade'] = "A"
+            if percentage >= 90:
+                context['grade'] = "A"
+            else:
+                context['grade'] = "F"
+            return render(request, 'student_marksheet/index.html', context)
+        else:
+            messages.error(request, f"No marks data found for user with roll number {token}.")
     else:
-        context['grade'] = "F"
-    return render(request, 'student_marksheet/index.html', context)
+        messages.error(request, f"User with roll number {token} does not exist.")
+    return redirect('input_roll')
 
 
 # View for user enter roll number
 def input_roll(request):
     if request.method == "POST":
         roll = request.POST.get('roll')
-        return redirect(f"/get-data/{roll}")
+        try:
+            user_data = UserData.objects.get(roll=roll)
+            return redirect("user_data", token=user_data.token)
+        except UserData.DoesNotExist:
+            messages.error(request, f"User with roll number {roll} does not exist.")
+            return redirect('input_roll') 
     return render(request, 'student_marksheet/inputform.html')
 
 

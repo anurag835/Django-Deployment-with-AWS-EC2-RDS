@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 class Logo(models.Model):
     image = models.ImageField(upload_to='logos/', null=True, blank=True)
@@ -10,6 +11,7 @@ class UserData(models.Model):
     course = models.CharField(max_length=100)
     branch = models.CharField(max_length=100)
     logo = models.OneToOneField(Logo, on_delete=models.SET_NULL, null=True, blank=True)
+    token = models.UUIDField(default=uuid.uuid4, editable=False)
 
 
 class UserInput(models.Model):
